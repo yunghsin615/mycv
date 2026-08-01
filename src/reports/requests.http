@@ -3,17 +3,17 @@ POST http://localhost:3000/reports
 Content-Type: application/json
 
 {
-    "make":"toyota",
-    "model": "corolla",
-    "year":1980,
+    "make":"ford",
+    "model": "model",
+    "year":2026,
     "mileage": 10000,  
     "lng": 0,
     "lat":0,
-    "price":5000
+    "price":20000
 }
 
 ### Approved a report
-PATCH http://localhost:3000/reports/5
+PATCH http://localhost:3000/reports/10
 Content-Type: application/json
 
 {
@@ -21,5 +21,5 @@ Content-Type: application/json
 }
 
 ### Get an estimate for an existing vehicle
-GET http://localhost:3000/reports?make=toyota&model=corolla&year=1981&mileage=10000&lng=0&lat=0
+GET http://localhost:3000/reports?make=ford&model=model&year=2026&mileage=10000&lng=0&lat=0
 
