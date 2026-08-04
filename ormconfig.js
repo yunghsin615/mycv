@@ -28,6 +28,15 @@ switch (process.env.NODE_ENV) {
     break;
 
   case 'prod':
+    Object.assign(dbConfig, {
+      type: 'postgres',
+      url: process.env.DATABASE_URL,
+      entities: ['**/*.entity.js'],
+      migrationsRun: true,
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    });
     break;
 
   default:
