@@ -30,12 +30,14 @@ switch (process.env.NODE_ENV) {
   case 'prod':
     Object.assign(dbConfig, {
       type: 'postgres',
-      url: process.env.DATABASE_URL,
+      host: 'localhost',
+      port: 5432,
+      username: 'kaydence',
+      password: '',
+      database: 'nestjs_app',
       entities: ['**/*.entity.js'],
+      migrations: ['migrations/*.ts'],
       migrationsRun: true,
-      ssl: {
-        rejectUnauthorized: false,
-      },
     });
     break;
 
