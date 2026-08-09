@@ -1,3 +1,6 @@
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
 const { DataSource } = require('typeorm');
 
 const dbConfig = {
@@ -30,14 +33,13 @@ switch (process.env.NODE_ENV) {
   case 'prod':
     Object.assign(dbConfig, {
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'kaydence',
-      password: '',
-      database: 'nestjs_app',
+      url: process.env.DATABASE_URL,
       entities: ['**/*.entity.js'],
       migrations: ['migrations/*.ts'],
       migrationsRun: true,
+      ssl: {
+        rejectUnauthorized: false,
+      },
     });
     break;
 
