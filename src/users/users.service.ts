@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { encrypt } from './utils/password.util';
 
 @Injectable()
 export class UsersService {
@@ -29,6 +30,11 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException('No fxxking user');
     }
+
+    if (attrs.password) {
+      attrs.password = await encrypt(attrs.password);
+    }
+
     Object.assign(user, attrs);
     return this.repo.save(user);
   }

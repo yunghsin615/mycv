@@ -4,10 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { randomBytes, scrypt as _scrypt } from 'crypto';
-import { promisify } from 'util';
-
-const scrypt = promisify(_scrypt);
+import { comparePassword, encrypt } from './utils/password.util';
 
 @Injectable()
 export class AuthService {
@@ -19,12 +16,9 @@ export class AuthService {
       throw new BadRequestException('This email has already signed up');
     }
 
-    const salt = randomBytes(8).toString('hex');
-    const hash = (await scrypt(password, salt, 32)) as Buffer;
+    const encryptedPwd = await encrypt(password);
 
-    const result = salt + '.' + hash.toString('hex');
-
-    const user = await this.usersService.create(email, result);
+    const user = await this.usersService.create(email, encryptedPwd);
     return user;
   }
 
@@ -33,10 +27,9 @@ export class AuthService {
     if (!user) {
       throw new NotFoundException('wrong user email');
     }
-    const [salt, hash] = user.password.split('.');
+    const isMatch = await comparePassword(password, user.password);
 
-    const pwdHash = (await scrypt(password, salt, 32)) as Buffer;
-    if (pwdHash.toString('hex') !== hash) {
+    if (!isMatch) {
       throw new BadRequestException('wrong user password');
     }
     return user;
