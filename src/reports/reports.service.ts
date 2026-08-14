@@ -26,7 +26,8 @@ export class ReportsService {
   }
 
   createEstimate(estimateDto: GetEstimateDto) {
-    const { make, model, lng, lat, year, mileage } = estimateDto;
+    const { make, model, lng, lat, year } = estimateDto;
+
     return this.repo
       .createQueryBuilder()
       .select('AVG(price)', 'price')
@@ -34,11 +35,8 @@ export class ReportsService {
       .andWhere('model = :model', { model })
       .andWhere('lng - :lng BETWEEN -5 AND 5', { lng })
       .andWhere('lat - :lat BETWEEN -5 AND 5', { lat })
-      .andWhere('lat - :lat BETWEEN -3 AND 3', { year })
+      .andWhere('year - :year BETWEEN -3 AND 3', { year })
       .andWhere('approved IS TRUE')
-      .orderBy('ABS(mileage - :mileage)', 'DESC')
-      .setParameters({ mileage })
-      .limit(3)
       .getRawOne();
   }
 }
