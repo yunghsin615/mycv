@@ -39,4 +39,12 @@ export class ReportsService {
       .andWhere('approved IS TRUE')
       .getRawOne();
   }
+
+  async remove(id: number) {
+    const user = await this.repo.findOneBy({ id });
+    if (!user) {
+      throw new NotFoundException('Report Not Found');
+    }
+    return this.repo.remove(user);
+  }
 }

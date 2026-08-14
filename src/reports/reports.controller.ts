@@ -7,6 +7,7 @@ import {
   UseGuards,
   Get,
   Query,
+  Delete,
 } from '@nestjs/common';
 import { CreateReportDto } from './dtos/create-report.dto';
 import { ReportsService } from './reports.service';
@@ -37,5 +38,10 @@ export class ReportsController {
   @Patch(':id')
   approveReport(@Param('id') id: string, @Body() body: ApproveReportDto) {
     return this.reportService.changeApproval(id, body.approved);
+  }
+
+  @Delete(':id')
+  deleteUser(@Param('id') id: string) {
+    return this.reportService.remove(parseInt(id));
   }
 }

@@ -23,3 +23,5 @@ Content-Type: application/json
 ### Get an estimate for an existing vehicle
 GET http://localhost:3000/reports?make=ford&model=model&year=2026&mileage=10000&lng=0&lat=0
 
+### Delete a report with id
+DELETE http://localhost:3000/reports/4
