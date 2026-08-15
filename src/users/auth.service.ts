@@ -10,7 +10,7 @@ import { comparePassword, encrypt } from './utils/password.util';
 export class AuthService {
   constructor(private usersService: UsersService) {}
 
-  async signup(email: string, password: string) {
+  async signup(email: string, password: string, name: string) {
     const userArr = await this.usersService.find(email);
     if (userArr.length) {
       throw new BadRequestException('This email has already signed up');
@@ -18,7 +18,7 @@ export class AuthService {
 
     const encryptedPwd = await encrypt(password);
 
-    const user = await this.usersService.create(email, encryptedPwd);
+    const user = await this.usersService.create(email, encryptedPwd, name);
     return user;
   }
 

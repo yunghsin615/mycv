@@ -30,6 +30,9 @@ export class Report {
   @Column()
   mileage!: number;
 
+  @Column({ nullable: true })
+  color?: string;
+
   @ManyToOne(() => User, (user) => user.reports)
   user!: User;
 }

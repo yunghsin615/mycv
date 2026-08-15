@@ -5,6 +5,7 @@ import {
   Max,
   IsLongitude,
   IsLatitude,
+  IsOptional,
 } from 'class-validator';
 
 export class CreateReportDto {
@@ -34,4 +35,8 @@ export class CreateReportDto {
   @Min(0)
   @Max(1000000)
   mileage!: number;
+
+  @IsString()
+  @IsOptional()
+  color?: string;
 }

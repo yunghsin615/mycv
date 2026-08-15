@@ -8,8 +8,8 @@ import { encrypt } from './utils/password.util';
 export class UsersService {
   constructor(@InjectRepository(User) private repo: Repository<User>) {}
 
-  create(email: string, password: string) {
-    const user = this.repo.create({ email, password });
+  create(email: string, password: string, name: string) {
+    const user = this.repo.create({ email, password, name });
 
     return this.repo.save(user);
   }
